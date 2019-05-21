@@ -143,7 +143,7 @@ def median(in_files):
     _, base, _ = split_filename(filename_to_list(in_files)[0])
     nb.save(median_img, base + "_median.nii.gz")
     return os.path.abspath(base + "_median.nii.gz")
-    return filename
+    #return filename
 
 
 def strip_rois_func(in_file, t_min):
