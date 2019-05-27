@@ -1,4 +1,5 @@
 from __future__ import division
+from glob import glob
 import numpy as np
 import h5py
 import pickle
@@ -11,8 +12,8 @@ import hcp_corr
 ne.set_num_threads(ne.ncores-1)
 
 
-rest_file = '/home/julia/projects/gradients/data_jo/%s_%s_rest%s_smooth_3.npy'
-mask_file = '/home/julia/projects/gradients/data_jo/'
+ts_files = glob('/home/julia/projects/gradients/data_jo/*MEDISO*.nii.gz')
+mask_file = '/home/julia/projects/gradients/data_jo/mask.nii.gz'
 corr_file = '/home/julia/projects/gradients/data_jo/corr.hdf5'
 embed_file = '/home/julia/projects/gradients/data_jo/embed.npy'
 embed_img = '/home/julia/projects/gradients/data_jo/embed.nii.gz'
@@ -33,12 +34,15 @@ def avg_correlation(ts_files, thr=None):
     '''
     # make empty avg corr matrix
     if type(ts_files[0]) == str:
-        get_size = np.load(ts_files[0]).shape[0]
+        img0 = nb.load(ts_files[0]).get_data()
+        get_size = img0.reshape(-1, img0.shape[-1]).shape[0]
+        del img0
     elif type(ts_files[0]) == np.ndarray:
         get_size = ts_files[0].shape[0]
 
     full_shape = (get_size, get_size)
     if np.mod((get_size**2-get_size), 2) == 0.0:
+        print(get_size)
         avg_corr = np.zeros((get_size**2-get_size)/2)
     else:
         print('size calculation no zero mod')
@@ -47,7 +51,9 @@ def avg_correlation(ts_files, thr=None):
     for rest in ts_files:
         # load time series
         if type(rest) == str:
-            rest = np.load(rest)
+            img = nb.load(rest).get_data()
+            rest = img.reshape(-1, img.shape[-1])
+            del img
         elif type(rest) == np.ndarray:
             pass
         # calculate correlations matrix
@@ -138,12 +144,12 @@ RUN
 ----
 '''
 
-print('correlation')
-ts_files = []
-for sub in subjects:
-    for sess in sessions:
-        rest = np.load(rest_file % (sub, 'lh', sess))
-        ts_files.append(rest)
+# print('correlation')
+# ts_files = []
+# for sub in subjects:
+#     for sess in sessions:
+#         rest = np.load(rest_file % (sub, 'lh', sess))
+#         ts_files.append(rest)
 
 upper_corr, full_shape = avg_correlation(ts_files)
 
