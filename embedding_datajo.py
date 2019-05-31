@@ -7,17 +7,18 @@ from mapalign import embed
 import numexpr as ne
 import nibabel as nb
 import hcp_corr
+import gc
 
 
 ne.set_num_threads(ne.ncores-1)
 
 
-ts_files = glob('/home/julia/projects/gradients/data_jo/*MEDISO*.nii.gz')
-mask_file = '/home/julia/projects/gradients/data_jo/mask.nii.gz'
-corr_file = '/home/julia/projects/gradients/data_jo/corr.hdf5'
-embed_file = '/home/julia/projects/gradients/data_jo/embed.npy'
-embed_img = '/home/julia/projects/gradients/data_jo/embed.nii.gz'
-embed_dict_file = '/home/julia/projects/gradients/data_jo/embed_dict.pkl'
+ts_files = glob('/data/julia/data_jo/in/*MEDISO*.nii.gz')
+mask_file = '/data/julia/data_jo/in/mask_200um.nii'
+corr_file = '/data/julia/data_jo/out/corr.hdf5'
+embed_file = '/data/julia/data_jo/out/embed.npy'
+embed_img = '/data/julia/data_jo/out/embed.nii.gz'
+embed_dict_file = '/data/julia/data_jo/out/embed_dict.pkl'
 
 calc_corr = False
 save_corr = False
@@ -42,8 +43,7 @@ def avg_correlation(ts_files, thr=None):
 
     full_shape = (get_size, get_size)
     if np.mod((get_size**2-get_size), 2) == 0.0:
-        print(get_size)
-        avg_corr = np.zeros((get_size**2-get_size)/2)
+        avg_corr = np.zeros(int((get_size**2-get_size)/2))
     else:
         print('size calculation no zero mod')
 
@@ -105,7 +105,10 @@ def embedding(upper_corr, full_shape, mask, n_components):
     print('...full matrix')
     full_corr = np.zeros(tuple(full_shape))
     full_corr[np.triu_indices_from(full_corr, k=1)] = np.nan_to_num(upper_corr)
+    del upper_corr
+    gc.collect()
     full_corr += full_corr.T
+    
 
     # apply mask
     print('...mask')
@@ -151,12 +154,19 @@ RUN
 #         rest = np.load(rest_file % (sub, 'lh', sess))
 #         ts_files.append(rest)
 
-upper_corr, full_shape = avg_correlation(ts_files)
+# upper_corr, full_shape = avg_correlation(ts_files)
 
-print('saving matrix')
-f = h5py.File(corr_file, 'w')
-f.create_dataset('upper_corr', data=upper_corr)
-f.create_dataset('shape', data=full_shape)
+# print('saving matrix')
+# f = h5py.File(corr_file, 'w')
+# f.create_dataset('upper_corr', data=upper_corr)
+# f.create_dataset('shape', data=full_shape)
+# f.close()
+
+
+print('loading matrix')
+f = h5py.File(corr_file, 'r')
+upper_corr = np.asarray(f['upper_corr'])
+full_shape = tuple(f['shape'])
 f.close()
 
 print('embedding')
