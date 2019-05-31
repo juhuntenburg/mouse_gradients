@@ -108,13 +108,16 @@ def embedding(upper_corr, full_shape, mask, n_components):
     del upper_corr
     gc.collect()
     full_corr += full_corr.T
+    gc.collect()
     
 
     # apply mask
     print('...mask')
     masked_corr = np.delete(full_corr, mask, 0)
     del full_corr
+    gc.collect()
     masked_corr = np.delete(masked_corr, mask, 1)
+    gc.collect()
 
     mask_flat = mask.flatten()
     all_voxel = range(mask_flat.shape[0])
