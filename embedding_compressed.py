@@ -13,13 +13,13 @@ from nilearn.input_data import NiftiMasker
 
 ne.set_num_threads(ne.ncores-1)
 
-
+ts_vol = "/data/julia/data_jo/in/orig/sub-jgrAesMEDISOc21R1L_ses-2_task-rest_acq-EPI_run-2_bold.nii.gz"
 ts_files = glob('/data/julia/data_jo/in/compressed/*.npy')
 corr_file = '/data/julia/data_jo/out/compressed/corr.hdf5'
 embed_file = '/data/julia/data_jo/out/compressed/embed.npy'
 embed_img = '/data/julia/data_jo/out/compressed/embed.nii.gz'
 embed_dict_file = '/data/julia/data_jo/out/compressed/embed_dict.pkl'
-mask = "/home/julia/projects/gradients/data_jo/in/isocortex.nii.gz"
+mask = "/data/julia/data_jo/in/isocortex.nii.gz"
 
 
 def avg_correlation(ts_files, thr=None):
@@ -30,7 +30,7 @@ def avg_correlation(ts_files, thr=None):
     # make empty avg corr matrix
     if type(ts_files[0]) == str:
         img0 = np.load(ts_files[0])
-        get_size = img0.shape[0]
+        get_size = img0.shape[1]
         del img0
 
     full_shape = (get_size, get_size)
@@ -43,7 +43,7 @@ def avg_correlation(ts_files, thr=None):
     for rest in ts_files:
         # load time series
         if type(rest) == str:
-            rest = np.load(rest)
+            rest = np.load(rest).T
         # calculate correlations matrix
         print('...corrcoef')
         corr = hcp_corr.corrcoef_upper(rest)
@@ -146,8 +146,6 @@ np.save(embed_file, embedding_result)
 
 print('revolume')
 masker = NiftiMasker(mask_img=mask, standardize=True)
-revolume = masker.inverse_transform(embedding_result)
-aff = nb.load(mask).affine
-hdr = nb.load(mask).header
-
-nb.Nifti1Image(revolume, aff, hdr).to_filename(embed_img)
+fake_compress = masker.fit_transform(ts_vol)
+revolume = masker.inverse_transform(embedding_result.T)
+revolume.to_filename(embed_img)
