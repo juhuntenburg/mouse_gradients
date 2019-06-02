@@ -19,7 +19,7 @@ corr_file = '/data/julia/data_jo/out/compressed/corr.hdf5'
 embed_file = '/data/julia/data_jo/out/compressed/embed.npy'
 embed_img = '/data/julia/data_jo/out/compressed/embed.nii.gz'
 embed_dict_file = '/data/julia/data_jo/out/compressed/embed_dict.pkl'
-mask = "/data/julia/data_jo/in/isocortex.nii.gz"
+mask = "/data/julia/data_jo/in/cortex_mask.nii.gz"
 
 
 def avg_correlation(ts_files, thr=None):
