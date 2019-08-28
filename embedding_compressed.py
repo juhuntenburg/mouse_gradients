@@ -1,4 +1,3 @@
-from __future__ import division
 from glob import glob
 import numpy as np
 import h5py
@@ -13,13 +12,13 @@ from nilearn.input_data import NiftiMasker
 
 ne.set_num_threads(ne.ncores-1)
 
-ts_vol = "/data/julia/data_jo/in/orig/sub-jgrAesMEDISOc21R1L_ses-2_task-rest_acq-EPI_run-2_bold.nii.gz"
-ts_files = glob('/data/julia/data_jo/in/compressed/*.npy')
-corr_file = '/data/julia/data_jo/out/compressed/corr.hdf5'
-embed_file = '/data/julia/data_jo/out/compressed/embed.npy'
-embed_img = '/data/julia/data_jo/out/compressed/embed.nii.gz'
-embed_dict_file = '/data/julia/data_jo/out/compressed/embed_dict.pkl'
-mask = "/data/julia/data_jo/in/cortex_mask.nii.gz"
+ts_vol = "/home/julia/data/gradients/orig/sub-jgrAesMEDISOc21R1L_ses-2_task-rest_acq-EPI_run-2_bold.nii.gz"
+ts_files = glob('/home/julia/data/gradients/compressed/*.npy')
+corr_file = '/home/julia/data/gradients/results/corr.hdf5'
+embed_file = '/home/julia/data/gradients/results/embed.npy'
+embed_img = '/home/julia/data/gradients/results/embed.nii.gz'
+embed_dict_file = '/home/julia/data/gradients/results/embed_dict.pkl'
+mask = "/home/julia/data/gradients/atlas/cortex/cortex_mask_25um.nii.gz"
 
 
 def avg_correlation(ts_files, thr=None):
