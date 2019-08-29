@@ -8,8 +8,8 @@ transfer_input_files = compress_data.py, embedding_compressed.py, ../embedding
 transfer_output_files = ../embedding
 
 # Change according to your app needs
-request_cpus = 1
-request_memory = 64000
+request_cpus = 16
+request_memory = 256000
 request_gpus = 0
 
 # Logging
