@@ -12,13 +12,13 @@ from nilearn.input_data import NiftiMasker
 
 ne.set_num_threads(ne.ncores-1)
 
-ts_vol = "/home/julia/data/gradients/orig/sub-jgrAesMEDISOc21R1L_ses-2_task-rest_acq-EPI_run-2_bold.nii.gz"
-ts_files = glob('/home/julia/data/gradients/compressed/*.npy')
-corr_file = '/home/julia/data/gradients/results/corr.hdf5'
-embed_file = '/home/julia/data/gradients/results/embed.npy'
-embed_img = '/home/julia/data/gradients/results/embed.nii.gz'
-embed_dict_file = '/home/julia/data/gradients/results/embed_dict.pkl'
-mask = "/home/julia/data/gradients/atlas/cortex/cortex_mask_25um.nii.gz"
+ts_vol = "embedding/orig/sub-jgrAesMEDISOc21R1L_ses-2_task-rest_acq-EPI_run-2_bold.nii.gz"
+ts_files = glob('embedding/compressed/*.npy')
+corr_file = 'embedding/results/corr.hdf5'
+embed_file = 'embedding/results/embed.npy'
+embed_img = 'embedding/results/embed.nii.gz'
+embed_dict_file = 'embedding/results/embed_dict.pkl'
+mask = "embedding/cortex_mask_25um.nii.gz"
 
 
 def avg_correlation(ts_files, thr=None):

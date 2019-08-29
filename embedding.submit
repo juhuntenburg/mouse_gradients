@@ -1,0 +1,21 @@
+universe = docker
+docker_image = docker-registry.champalimaud.pt/python3.6:e5355e79838397100fb581025538c2f4e4b6fbcf
+executable = run_embedding.sh
+
+
+# File transfer
+transfer_input_files = compress_data.py, embedding_compressed.py, ../embedding
+transfer_output_files = ../embedding
+
+# Change according to your app needs
+request_cpus = 1
+request_memory = 64000
+request_gpus = 0
+
+# Logging
+stream_output = True
+output = output_$(Cluster)-$(Process).txt
+error = error_$(Cluster)-$(Process).txt
+log = log_$(Cluster)-$(Process).txt
+
+queue
