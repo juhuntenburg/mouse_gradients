@@ -5,7 +5,6 @@ import os
 
 mask = "embedding/cortex_mask_25um.nii.gz"
 func = glob("embedding/orig/*MEDISO*EPI*.nii.gz")
-print(func)
 
 masker = NiftiMasker(mask_img=mask, standardize=True)
 
