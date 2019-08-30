@@ -1,15 +1,15 @@
 universe = docker
-docker_image = docker-registry.champalimaud.pt/python3.6:e5355e79838397100fb581025538c2f4e4b6fbcf
+docker_image = docker-registry.champalimaud.pt/python3.6:a0946dc7fe27f0649a4d717bbd0125b680c0b36a 
 executable = run_embedding.sh
-
+arguments = compress_data.py
 
 # File transfer
-transfer_input_files = compress_data.py, embedding_compressed.py, ../embedding
-transfer_output_files = ../embedding
+transfer_input_files = compress_data.py, embedding
+transfer_output_files = embedding
 
 # Change according to your app needs
-request_cpus = 16
-request_memory = 256000
+request_cpus = 1
+request_memory = 32000
 request_gpus = 0
 
 # Logging
