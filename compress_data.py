@@ -3,8 +3,8 @@ from glob import glob
 import numpy as np
 import os
 
-mask = "embedding/cortex_mask_25um.nii.gz"
-func = glob("embedding/orig/*MEDISO*EPI*.nii.gz")
+mask = "/nfs/tank/embedding/cortex_mask_25um.nii.gz"
+func = glob("/nfs/tank/embedding/orig/*MEDISO*EPI*.nii.gz")
 
 masker = NiftiMasker(mask_img=mask, standardize=True)
 
