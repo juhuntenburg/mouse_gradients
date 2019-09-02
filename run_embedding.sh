@@ -11,7 +11,7 @@ pip install --user git+https://github.com/satra/mapalign.git
 
 # run compression script
 echo "Start compression"
-python $@
+python -u $@ 1>&1 2>&2
 echo "Done compression"
 
 # run embedding script

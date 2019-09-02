@@ -9,7 +9,7 @@ transfer_output_files = embedding
 
 # Change according to your app needs
 request_cpus = 1
-request_memory = 32000
+request_memory = 64000
 request_gpus = 0
 
 # Logging
