@@ -4,8 +4,7 @@ executable = run_embedding.sh
 arguments = compress_data.py
 
 # File transfer
-transfer_input_files = compress_data.py, embedding
-transfer_output_files = embedding
+transfer_input_files = compress_data.py
 
 # Change according to your app needs
 request_cpus = 1
