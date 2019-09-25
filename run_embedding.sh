@@ -10,9 +10,9 @@ pip install --user git+https://github.com/juhuntenburg/hcp_corr.git@enh/python3
 pip install --user git+https://github.com/satra/mapalign.git
 
 # run compression script
-echo "Start compression"
+echo "Start script"
 python -u $@ 1>&1 2>&2
-echo "Done compression"
+echo "Done script"
 
 # run embedding script
 # python embedding_compressed.py
