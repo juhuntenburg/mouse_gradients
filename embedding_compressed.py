@@ -18,7 +18,7 @@ corr_file = '/nfs/tank/shemesh/users/julia.huntenburg/rodent_gradients/embedding
 embed_file = '/nfs/tank/shemesh/users/julia.huntenburg/rodent_gradients/embedding/results/embed.npy'
 embed_img = '/nfs/tank/shemesh/users/julia.huntenburg/rodent_gradients/embedding/results/embed.nii.gz'
 embed_dict_file = '/nfs/tank/shemesh/users/julia.huntenburg/rodent_gradients/embedding/results/embed_dict.pkl'
-mask = "/nfs/tank/shemesh/users/julia.huntenburg/rodent_gradients/embedding/cortex_mask_25um.nii.gz"
+mask = "/nfs/tank/shemesh/users/julia.huntenburg/rodent_gradients/embedding/cortex_mask_200um.nii.gz"
 
 
 def avg_correlation(ts_files, thr=None):

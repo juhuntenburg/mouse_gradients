@@ -13,7 +13,3 @@ pip install --user git+https://github.com/satra/mapalign.git
 echo "Start script"
 python -u $@ 1>&1 2>&2
 echo "Done script"
-
-# run embedding script
-# python embedding_compressed.py
-# echo "Done embedding"
