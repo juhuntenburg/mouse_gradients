@@ -85,12 +85,10 @@ def embedding(upper_corr, full_shape, n_components):
     return embedding_results, embedding_dict
 
 
-# Original data
+# Input data
 mask = "/home/julia/data/gradients/atlas/allen_api/cortex_mask_tight_200um.nii.gz"
 func = glob("/home/julia/data/gradients/results/orig_allen/*MEDISO*EPI*.nii.gz")
 
-# Data for embedding
-ts_files = glob('/home/julia/data/gradients/results/orig_allen/*.npy')
 
 # Output data
 corr_file = '/home/julia/data/gradients/results/embedding_vol/corr.hdf5'
@@ -110,6 +108,7 @@ for f in func:
 
 # Run correlation and embedding
 ne.set_num_threads(ne.ncores-1)
+ts_files = glob('/home/julia/data/gradients/results/orig_allen/*.npy')
 
 print('correlation')
 upper_corr, full_shape = avg_correlation(ts_files)
@@ -119,6 +118,12 @@ f = h5py.File(corr_file, 'w')
 f.create_dataset('upper_corr', data=upper_corr)
 f.create_dataset('shape', data=full_shape)
 f.close()
+
+# print('loading matrix')
+# f = h5py.File(corr_file, 'r')
+# upper_corr = np.asarray(f['upper_corr'])
+# full_shape = tuple(f['shape'])
+# f.close()
 
 print('embedding')
 embedding_result, embedding_dict = embedding(upper_corr, full_shape, 100)
