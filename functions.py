@@ -38,7 +38,7 @@ def find_profiles(mesh, normals, mask, resolution=200):
                 # when outside the cortex mask
                 if np.isnan(mask[voxel[0], voxel[1], voxel[2]]) == True:
                     # allow to go on for a few voxels in the beginning
-                    if len(voxels) < 2:
+                    if len(voxels) < 3:
                         voxels.append(voxel)
                     # if the nan occurs later, stop sampling
                     else:
@@ -48,11 +48,12 @@ def find_profiles(mesh, normals, mask, resolution=200):
                     voxels.append(voxel)
                     profile.append(voxel)
 
-                if len(profile) > 20:
-                    print(p, " over 20")
+                # don't go deeper than 11 voxels (2.2 mm)
+                if len(profile) > 10:
                     break
 
-        profiles.append(profile)
+        # remove the first voxel to avoid partial voluming
+        profiles.append(profile[1:])
 
     return profiles
 
@@ -76,27 +77,3 @@ def profile_sampling(data, profiles):
             mesh_data[p,:] = np.nanmean(point_data, axis=0)
 
     return mesh_data
-
-
-
-mesh = io.load_mesh_geometry("/home/julia/data/gradients/atlas/allen_api/brain_mesh.vtk")
-normals = np.load("/home/julia/data/gradients/atlas/allen_api/brain_mesh_normals.npy")
-mask = nb.load("/home/julia/data/gradients/atlas/allen_api/cortex_mask_tight_200um.nii.gz").get_data()
-
-profiles = find_profiles(mesh, normals, mask, resolution=200)
-with open('/home/julia/data/gradients/results/mesh_sampling/profiles.pkl', 'wb') as f:
-    pickle.dump(profiles, f)
-
-# For QA
-lvl = nb.load("/home/julia/data/gradients/atlas/allen_api/cortex_mask_tight_lvl_200um.nii.gz").get_data()
-mesh_data = profile_sampling(lvl, profiles)
-mesh_data = np.nan_to_num(mesh_data)
-mesh['data']=mesh_data
-io.save_mesh('/home/julia/data/gradients/results/mesh_sampling/lvl_qa_mesh_sampling.vtk', mesh)
-
-profile_length = []
-for p in range(len(mesh["points"])):
-    profile_length.append(len(profiles[p]))
-profile_length=np.asarray(profile_length)
-mesh['data'] = profile_length
-io.save_mesh('/home/julia/data/gradients/results/mesh_sampling/profile_length_mesh_sampling.vtk', mesh)
