@@ -59,7 +59,7 @@ def find_profiles(mesh, normals, mask, resolution=200):
 
 
 
-def profile_sampling(data, profiles):
+def profile_sampling(data, profiles, method='mean'):
 
     if len(data.shape) == 3:
         data = data[:,:,:,np.newaxis]
@@ -74,6 +74,17 @@ def profile_sampling(data, profiles):
             for v in range(len(profiles[p])):
                 vox = profiles[p][v]
                 point_data[v,:] = data[vox[0], vox[1], vox[2], :]
-            mesh_data[p,:] = np.nanmean(point_data, axis=0)
+            if method == 'mean':
+                mesh_data[p,:] = np.nanmean(point_data, axis=0)
+            elif method == 'winner':
+                if len(np.squeeze(point_data).shape) > 1:
+                    'winner method only available for 1D data'
+                    break
+                else:
+                    labels = np.unique(point_data)
+                    lens = []
+                    for u in labels:
+                        lens.append(np.where(point_data==u)[0].shape[0])
+                    mesh_data[p,:] = labels[np.where(lens == np.max(lens))[0][0]]
 
     return mesh_data
