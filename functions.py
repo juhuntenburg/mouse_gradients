@@ -39,7 +39,8 @@ def find_profiles(mesh, normals, mask, resolution=200):
                 # when outside the cortex mask
                 if np.isnan(mask[voxel[0], voxel[1], voxel[2]]) == True:
                     # allow to go on for a few voxels in the beginning
-                    if len(voxels) < 20:
+                    #if len(voxels) < 20:
+                    if len(voxels) < 3:
                         voxels.append(voxel)
                     # if the nan occurs later, stop sampling
                     else:
@@ -50,7 +51,8 @@ def find_profiles(mesh, normals, mask, resolution=200):
                     profile.append(voxel)
 
                 # don't go deeper than 11 voxels (2.2 mm)
-                if len(profile) > 80:
+                #if len(profile) > 80:
+                if len(profile) > 10:
                     break
 
         # remove the first voxel to avoid partial voluming
