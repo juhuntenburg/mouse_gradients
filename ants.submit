@@ -1,0 +1,20 @@
+universe = docker
+docker_image = ...
+executable = run_ants.sh
+arguments = ants.py
+
+# File transfer
+transfer_input_files = ants.py
+
+# Change according to your app needs
+request_cpus = 16
+request_memory = 256000
+request_gpus = 0
+
+# Logging
+stream_output = True
+output = output_$(Cluster)-$(Process).txt
+error = error_$(Cluster)-$(Process).txt
+log = log_$(Cluster)-$(Process).txt
+
+queue
