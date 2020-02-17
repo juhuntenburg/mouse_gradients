@@ -29,7 +29,7 @@ reg_struct = Registration(fixed_image = allen_img,
                           winsorize_lower_quantile = 0.005,
                           winsorize_upper_quantile = 0.995,
                           args = '--float',
-                          num_threads = 16,
+                          num_threads = 12,
                           interpolation = 'BSpline',
                           initial_moving_transform_com = True,
                          )
