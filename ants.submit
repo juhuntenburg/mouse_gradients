@@ -7,8 +7,8 @@ executable = ants_run.sh
 #transfer_input_files = ants.py
 
 # Change according to your app needs
-request_cpus = 32
-request_memory = 256000
+request_cpus = 12
+request_memory = 62000
 request_gpus = 0
 
 # Logging
