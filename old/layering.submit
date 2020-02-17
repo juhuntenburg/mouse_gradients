@@ -1,0 +1,22 @@
+universe = docker
+docker_image = docker-registry.champalimaud.pt/nighres-ab:a07add5919eee483ac22592c9efa6d91a5715aa3
+executable = /usr/bin/python3
+arguments = layering.py
+
+
+# File transfer
+transfer_input_files = layers, layering.py
+transfer_output_files = layers
+
+# Change according to your app needs
+request_cpus = 1
+request_memory = 128000
+request_gpus = 0
+
+# Logging
+stream_output = True
+output = output_$(Cluster)-$(Process).txt
+error = error_$(Cluster)-$(Process).txt
+log = log_$(Cluster)-$(Process).txt
+
+queue
