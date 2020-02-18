@@ -1,10 +1,7 @@
 universe = docker
 docker_image = docker-registry.champalimaud.pt/ants:61cbb853de44b7a1325682bba7fc8b9d0f4b0078
 executable = ants_run.sh
-#arguments = ants.py
-
-# File transfer
-#transfer_input_files = ants.py
+# executable = ants_apply_transforms.sh
 
 # Change according to your app needs
 request_cpus = 48
