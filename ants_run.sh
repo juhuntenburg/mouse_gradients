@@ -15,7 +15,7 @@ antsRegistration --float --collapse-output-transforms 1 --dimensionality 3 \
 --initial-moving-transform [ $allen_img, $yongsoo_img, 1 ] \
 --initialize-transforms-per-stage 0 \
 --interpolation BSpline \
---output [ ants/yongsoo2allen_, $yongsoo_img_warped ] \
+--output [ yongsoo2allen_, $yongsoo_img_warped ] \
 --use-estimate-learning-rate-once 0 \
 --use-histogram-matching 0 \
 --winsorize-image-intensities [ 0.005, 0.995 ]  \
