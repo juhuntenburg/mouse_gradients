@@ -7,7 +7,7 @@ import pickle
 annot = np.array(nb.load('/home/julia/data/gradients/atlas/allen_api/regions/annot_finest_200um.nii.gz').get_data(), dtype='float64')
 gradient = nb.load('/home/julia/data/gradients/results/embedding_vol/embed.nii.gz').get_data()
 mask = nb.load('/home/julia/data/gradients/atlas/allen_api/cortex_mask_tight_200um.nii.gz').get_data()
-df = pd.read_csv('/home/julia/data/gradients/results/regions/finest_regions.csv')
+df = pd.read_csv('/home/julia/workspace/rodent_gradients/regions.csv')
 df = df.drop(columns=["Unnamed: 0"])
 
 # Caculate first the region means for each gradient
@@ -22,4 +22,4 @@ for g in range(6):
 
     df['gradient %i' %g] = region_means
 
-df.to_csv('/home/julia/data/gradients/results/regions/finest_regions.csv')
+df.to_csv('/home/julia/workspace/rodent_gradients/regions.csv')
