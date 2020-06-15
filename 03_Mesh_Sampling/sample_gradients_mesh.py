@@ -4,7 +4,7 @@ from glob import glob
 import numpy as np
 import nibabel as nb
 from nighres import io
-from functions import profile_sampling
+from profile_functions import profile_sampling
 
 data_dir = '/home/julia/data/gradients/'
 

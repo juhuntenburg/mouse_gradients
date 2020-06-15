@@ -6,7 +6,7 @@ from glob import glob
 import os
 
 
-def find_profiles(mesh, normals, mask, resolution=200):
+def find_profiles(mesh, normals, mask, resolution=200, highres=False):
 
     mask=np.array(mask, dtype=np.float32)
     mask[mask==0]=np.nan
@@ -39,21 +39,31 @@ def find_profiles(mesh, normals, mask, resolution=200):
                 # when outside the cortex mask
                 if np.isnan(mask[voxel[0], voxel[1], voxel[2]]) == True:
                     # allow to go on for a few voxels in the beginning
-                    #if len(voxels) < 20:
-                    if len(voxels) < 3:
-                        voxels.append(voxel)
-                    # if the nan occurs later, stop sampling
-                    else:
-                        break
+                    if highres is False:
+                        if len(voxels) < 3:
+                            voxels.append(voxel)
+                        # if the nan occurs later, stop sampling
+                        else:
+                            break
+                    elif highres is True:
+                        if len(voxels) < 20:
+                            voxels.append(voxel)
+                        # if the nan occurs later, stop sampling
+                        else:
+                            break
+
                 else:
                     # the actual profile only gets appended for none nan voxels
                     voxels.append(voxel)
                     profile.append(voxel)
 
                 # don't go deeper than 11 voxels (2.2 mm)
-                #if len(profile) > 80:
-                if len(profile) > 10:
-                    break
+                if highres is False:
+                    if len(profile) > 10:
+                        break
+                elif highres is True:
+                    if len(profile) > 80:
+                        break
 
         # remove the first voxel to avoid partial voluming
         profiles.append(profile[1:])
