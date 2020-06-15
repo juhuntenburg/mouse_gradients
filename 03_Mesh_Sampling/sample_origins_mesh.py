@@ -29,4 +29,4 @@ for origin in ['hippocampus', 'piriform']:
     # load and save data on mesh
     mesh = io.load_mesh(data_dir+'allen_atlas/brain_mesh.vtk')
     mesh['data'] = np.nan_to_num(data_mesh)
-    io.save_mesh(data_dir+'results/origins/%s_sampled_mesh_dil.vtk' %origin, mesh)
+    io.save_mesh(data_dir+'results/origins/%s_sampled_mesh.vtk' %origin, mesh)
