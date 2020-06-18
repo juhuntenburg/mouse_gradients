@@ -17,7 +17,7 @@ datasets = ['csd', 'ad2', 'ad3']
 
 for d in datasets:
     # Transfrom from Jo space to Allen space
-    aff = nb.load(atlas/allen_api/template_200.nii.gz').affine
+    aff = nb.load(data_dir+'allen_atlas/template_200um.nii.gz').affine
     hdr = nb.load(data_dir+'allen_atlas/template_200um.nii.gz').header
 
     orig = glob(data_dir+'repro/%s/%s*.nii.gz'%(d, d.upper()))
@@ -43,7 +43,7 @@ for d in datasets:
     for f in func:
         func_compressed = masker.fit_transform(f)
         np.save(data_dir+'repro/%s_allen/%s.npy'
-                % (d, os.path.basename(f).split(".")[0], func_compressed))
+                % (d, os.path.basename(f).split(".")[0]), func_compressed)
         print(f)
 
     # Run correlation and embedding
