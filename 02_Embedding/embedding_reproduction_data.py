@@ -31,10 +31,10 @@ for d in datasets:
     func = glob(data_dir+'/repro/%s_allen/*.nii.gz' %d)
 
     # Output data
-    corr_file = data_dir+'results/repro/%s_corr.hdf5'
-    embed_file = data_dir+'results/repro/%s_embed.npy'
-    embed_img = data_dir+'results/repro/%s_embed.nii.gz'
-    embed_dict_file = data_dir+'results/repro/%s_embed_dict.pkl'
+    corr_file = data_dir+'results/repro/%s/%s_corr.hdf5'
+    embed_file = data_dir+'results/repro/%s/%s_embed.npy'
+    embed_img = data_dir+'results/repro/%s/%s_embed.nii.gz'
+    embed_dict_file = data_dir+'results/repro/%s/%s_embed_dict.pkl'
 
 
     # Mask, smooth and compress the data
@@ -54,7 +54,7 @@ for d in datasets:
     upper_corr, full_shape = avg_correlation(ts_files)
 
     print('saving matrix')
-    f = h5py.File(corr_file%d, 'w')
+    f = h5py.File(corr_file%(d,d), 'w')
     f.create_dataset('upper_corr', data=upper_corr)
     f.create_dataset('shape', data=full_shape)
     f.close()
@@ -63,13 +63,13 @@ for d in datasets:
     embedding_result, embedding_dict = embedding(upper_corr, full_shape, 100)
 
     print('saving embedding')
-    pkl_out = open(embed_dict_file%d, 'wb')
+    pkl_out = open(embed_dict_file%(d,d) 'wb')
     pickle.dump(embedding_dict, pkl_out)
     pkl_out.close()
-    np.save(embed_file%d, embedding_result)
+    np.save(embed_file%(d,d), embedding_result)
 
     print('revolume')
     masker = NiftiMasker(mask_img=mask, standardize=True)
     fake_compress = masker.fit_transform(func[0])
     revolume = masker.inverse_transform(embedding_result.T)
-    revolume.to_filename(embed_img%d)
+    revolume.to_filename(embed_img%(d,d))

@@ -20,6 +20,6 @@ for t in range(data.shape[3]):
     data_mesh[:,t] = np.squeeze(profile_sampling(data[:,:,:,t], profiles))
 
 # load and save data on mesh
-mesh = io.load_mesh_geometry(data_dir+'atlas/allen_api/brain_mesh.vtk')
+mesh = io.load_mesh_geometry(data_dir+'allen_atlas/brain_mesh.vtk')
 mesh['data'] = np.nan_to_num(data_mesh)
 io.save_mesh(data_dir+'results/embedding/embed_sampled_mesh.vtk', mesh)
