@@ -1,0 +1,21 @@
+universe = docker
+docker_image = docker-registry.champalimaud.pt/python3.6:a0946dc7fe27f0649a4d717bbd0125b680c0b36a
+executable = run_surface.sh
+arguments = surface_2.py
+
+
+# File transfer
+transfer_input_files = surface_2.py
+
+# Change according to your app needs
+request_cpus = 4
+request_memory = 60000
+request_gpus = 0
+
+# Logging
+stream_output = True
+output = output_$(Cluster)-$(Process).txt
+error = error_$(Cluster)-$(Process).txt
+log = log_$(Cluster)-$(Process).txt
+
+queue
