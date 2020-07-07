@@ -8,7 +8,7 @@ arguments = surface_4.py
 transfer_input_files = surface_4.py
 
 # Change according to your app needs
-request_cpus = 4
+request_cpus = 10
 request_memory = 60000
 request_gpus = 0
 
