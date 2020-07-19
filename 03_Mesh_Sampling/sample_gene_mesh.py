@@ -18,7 +18,7 @@ mask = nb.load('/home/julia/data/gradients/allen_atlas/gene_expression/gene_mask
 
 data_mesh = np.zeros((len(profiles), data.shape[3]))
 
-for p in range(6):
+for p in range(4):
     data[:,:,:,p][mask==0] = np.nan
     data_mesh[:,p] = np.squeeze(profile_sampling(data[:,:,:,p], profiles))
 
